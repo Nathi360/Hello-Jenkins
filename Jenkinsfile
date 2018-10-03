@@ -5,8 +5,14 @@ pipeline {
             steps {
                 sh 'mvn --version'
                 sh 'make && make run'
-                sh 'echo "Done!"'
+                sh 'echo "Build done!"'
             }
+        }
+    }
+    post{
+        always{
+            sh 'make clean'
+            sh 'echo "Clean-up done!"'
         }
     }
 }
