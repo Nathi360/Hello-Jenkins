@@ -4,14 +4,14 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'echo "Building ..."'
-                sh 'make && make run'
+                sh 'javac *.java'
                 sh 'echo "Build done!"'
             }
         }
         stage('Deploy') {
             steps {
                 sh 'echo "Deploying ..."'
-                sh 'echo "Deploy done!"'
+                sh 'java Initiator'
             }
         }
         stage('Test') {
@@ -23,7 +23,7 @@ pipeline {
     }
     post{
         always{
-            sh 'make clean'
+            sh 'rm *.class'
             sh 'echo "Clean-up done!"'
         }
     }
