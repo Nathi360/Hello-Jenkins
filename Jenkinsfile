@@ -4,6 +4,8 @@ pipeline {
         stage('build') {
             steps {
                 sh 'mvn --version'
+                sh 'make && make run'
+                sh 'echo "Done!"'
             }
         }
     }
