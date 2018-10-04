@@ -6,6 +6,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'make'
+                sh 'jar cfe test.jar Initiator *.class'
             }
         }
         stage('Test') {
@@ -15,13 +16,14 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'make run'
+                sh 'java -jar test.jar'
             }
         }
     }
     post{
         always{
             sh 'make clean'
+            sh 'rm -rf test.jar'
         }
     }
 }
