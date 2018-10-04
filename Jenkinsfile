@@ -1,17 +1,12 @@
+/********** Declaritive ***********/
 pipeline {
     agent { docker { image 'maven:3.3.3' } }
     stages {
         stage('Build') {
             steps {
                 sh 'echo "Building ..."'
-                sh 'javac *.java'
+                sh 'make'
                 sh 'echo "Build done!"'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'echo "Deploying ..."'
-                sh 'java Initiator'
             }
         }
         stage('Test') {
@@ -20,11 +15,27 @@ pipeline {
                 sh 'echo "Testing done!"'
             }
         }
+        stage('Deploy') {
+            steps {
+                sh 'echo "Deploying ..."'
+                sh 'make run'
+            }
+        }
     }
     post{
         always{
-            sh 'rm *.class'
+            sh 'make clean'
             sh 'echo "Clean-up done!"'
         }
+    }
+}
+
+/********** Script ***********/
+node{
+    stage('Build'){
+        sh 'make'
+    }
+    stage('Deploy'){
+        sh 'make run'
     }
 }
